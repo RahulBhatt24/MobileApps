@@ -35,8 +35,9 @@ public class MainActivity extends AppCompatActivity {
     String[] greetingMessages = {"Welcome to Chipotle! Do you want a burrito or a bowl?", "Would you like a burrito or a bowl?", "Hi! Are you having a burrito or a bowl today?", "We offer burritos or bowls, which would you like?"};
     String[] toppingMessages = {"And what would you like on it?", "What would you like to add?", "Can you please select what else you want", "We have a deal on unlimited ingredients, please select what you want!"};
     String[] extraMessages = {"Can I interest you in guacamole for an extra $2?", "Would you like lemonade for an extra $2?", "Do you want a soda for an extra $2?", "Can I interest you in a drink for an extra $2?"};
-    String[] paymentMessagesNo = {"Your total comes out to $7.13. Please come again!", "It's $7.13, see ya later!", "Thanks for coming!", "Please come again"};
-    String[] paymentMessagesYes = {"Your total comes out to $9.13. Please come again!", "It's $9.13, see ya later!", "Thanks for coming!", "Please come again"};
+    String[] paymentMessagesNo = {"Your total comes out to $7.13. Please come again!", "It's $7.13, see ya later!", "Thanks for coming!"};
+    String[] paymentMessagesYes = {"Your total comes out to $9.13. Please come again!", "It's $9.13, see ya later!", "Thanks for coming!"};
+    String[] byeMessages = {"Goodbye!", "See ya!", "Later!", "Bye!"};
 
     @Override
     protected void onResume() {
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         textView=findViewById(R.id.id_textview);
 
-        textView.setText(""+(int)(Math.random()*4));
+        textView.setText("GREETING STATE");
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECEIVE_SMS}, 0);
@@ -134,6 +135,11 @@ public class MainActivity extends AppCompatActivity {
         else if (state == 4 && (message.toLowerCase().contains("no"))) {
             sendText(paymentMessagesNo[(int)(Math.random()*4)]);
             textView.setText("PAYMENT STATE");
+            state++;
+        }
+        else if (state == 5 && (message.toLowerCase().contains("bye") || message.toLowerCase().contains("later"))) {
+            sendText(byeMessages[(int)(Math.random()*4)]);
+            textView.setText("GOODBYE STATE");
             state++;
         }
         else {
