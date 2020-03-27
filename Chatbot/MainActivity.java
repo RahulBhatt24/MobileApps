@@ -57,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         textView=findViewById(R.id.id_textview);
 
+        textView.setText(""+(int)(Math.random()*4));
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECEIVE_SMS}, 0);
         }
@@ -68,15 +70,6 @@ public class MainActivity extends AppCompatActivity {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_SMS}, 0);
         }
-
-        if(state==1)
-            textView.setText("GREETING STATE");
-        else if(state==2)
-            textView.setText("ASKS FOR INGREDIENTS STATE");
-        else if(state==3)
-            textView.setText("ASKS FOR EXTRAS STATE");
-        else if(state==4)
-            textView.setText("PAYMENT STATE");
 
 
         broadcastReceiver = new BroadcastReceiver() {
@@ -119,23 +112,28 @@ public class MainActivity extends AppCompatActivity {
 
     public void runAi(String message) {
         if (state == 1 && (message.toLowerCase().contains("hi") || message.toLowerCase().contains("hello")) || message.toLowerCase().contains("hey")) {
-            sendText(greetingMessages[(int)(Math.random()*3)]);
+            sendText(greetingMessages[(int)(Math.random()*4)]);
+            textView.setText("GREETING STATE");
             state++;
         }
         else if (state == 2 && (message.toLowerCase().contains("burrito") || message.toLowerCase().contains("bowl"))) {
-            sendText(toppingMessages[(int)(Math.random()*3)]);
+            sendText(toppingMessages[(int)(Math.random()*4)]);
+            textView.setText("ASKS FOR INGREDIENTS STATE");
             state++;
         }
         else if (state == 3 && (message.toLowerCase().contains("chicken") || message.toLowerCase().contains("rice")) || message.toLowerCase().contains("beans") || message.toLowerCase().contains("corn") || message.toLowerCase().contains("cheese")) {
-            sendText(extraMessages[(int)(Math.random()*3)]);
+            sendText(extraMessages[(int)(Math.random()*4)]);
+            textView.setText("ASKS FOR EXTRAS STATE");
             state++;
         }
         else if (state == 4 && (message.toLowerCase().contains("yes"))) {
-            sendText(paymentMessagesYes[(int)(Math.random()*3)]);
+            sendText(paymentMessagesYes[(int)(Math.random()*4)]);
+            textView.setText("PAYMENT STATE");
             state++;
         }
         else if (state == 4 && (message.toLowerCase().contains("no"))) {
-            sendText(paymentMessagesNo[(int)(Math.random()*3)]);
+            sendText(paymentMessagesNo[(int)(Math.random()*4)]);
+            textView.setText("PAYMENT STATE");
             state++;
         }
         else {
